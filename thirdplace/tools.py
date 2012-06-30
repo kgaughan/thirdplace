@@ -5,6 +5,9 @@ import re
 import sys
 
 
+import thirdplace.models
+
+
 def generate_secret_key():
     """Generate a string suitable for use as a secret key."""
     # 48 is a multiple of both 6 and 8, thus won't leave rubbish at the
@@ -25,6 +28,12 @@ def replace_secret_key(settings_path):
         fh.writelines(lines)
 
 
+@argh.command
+def initdb():
+    """Initialise the database."""
+    thirdplace.models.db.create_all()
+
+
 @argh.arg('path', help='settings file to update')
 def secretkey(args):
     """Update the secret key in a settings file."""
@@ -34,7 +43,7 @@ def secretkey(args):
 def main():
     """Dispatcher for the tools."""
     parser = argh.ArghParser()
-    parser.add_commands([secretkey])
+    parser.add_commands([initdb, secretkey])
     return parser.dispatch(add_help_command=True)
 
 
