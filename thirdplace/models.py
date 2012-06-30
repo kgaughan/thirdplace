@@ -17,7 +17,9 @@ class Forum(db.Model):
     __tablename__ = 'forums'
 
     forum_id = db.Column(db.Integer, primary_key=True)
-    latest_post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'))
+    latest_post_id = db.Column(
+        db.Integer,
+        db.ForeignKey('posts.post_id', use_alter=True, name='fk_latest'))
     forum = db.Column(db.String(128), nullable=False)
 
 
@@ -31,7 +33,9 @@ class Topic(db.Model):
 
     topic_id = db.Column(db.Integer, primary_key=True)
     forum_id = db.Column(db.Integer, db.ForeignKey('forums.forum_id'))
-    latest_post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'))
+    latest_post_id = db.Column(
+        db.Integer,
+        db.ForeignKey('posts.post_id', use_alter=True, name='fk_latest'))
     topic = db.Column(db.String(128), nullable=False)
     status = db.Column(db.Integer, nullable=False)
 
@@ -47,8 +51,7 @@ class Post(db.Model):
     topic_id = db.Column(db.Integer, db.ForeignKey('topics.topic_id'))
     modified = db.Column(db.DateTime, nullable=False)
     posted = db.Column(db.DateTime, nullable=False)
-    poster_user_id = db.Column(
-        db.Integer, db.ForeignKey('users.user_id'))
+    poster_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     post = db.Column(db.Text, nullable=False)
 
     poster = db.relationship(
