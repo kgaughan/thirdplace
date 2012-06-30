@@ -1,6 +1,8 @@
-import re
-import os
+import argh
 import base64
+import os
+import re
+import sys
 
 
 def generate_secret_key():
@@ -21,3 +23,20 @@ def replace_secret_key(settings_path):
         fh.seek(0)
         fh.truncate()
         fh.writelines(lines)
+
+
+@argh.arg('path', help='settings file to update')
+def secretkey(args):
+    """Update the secret key in a settings file."""
+    replace_secret_key(args.path)
+
+
+def main():
+    """Dispatcher for the tools."""
+    parser = argh.ArghParser()
+    parser.add_commands([secretkey])
+    return parser.dispatch(add_help_command=True)
+
+
+if __name__ == '__main__':
+    sys.exit(main())
