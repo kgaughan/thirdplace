@@ -1,0 +1,141 @@
+body {
+	font-family: Calibri, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Lucida, sans-serif;
+	line-height: 1.5;
+	margin: 0;
+	padding: 0;
+	border-top: 1ex solid #003;
+	background: #EEF;
+}
+form {
+	margin: 0 auto;
+	padding: 0;
+}
+
+#header {
+	background: #016;
+	color: #AAF;
+	padding: 2em 1ex 1ex 1ex;
+	line-height: 1.2;
+}
+#header h1 {
+	font-weight: normal;
+	line-height: 1;
+	margin: 0;
+	font-size: 250%;
+}
+#header p {
+	margin: 0;
+	font-weight: bold;
+	color: white;
+}
+#header p a {
+	font-weight: normal;
+	color: #CCF;
+}
+
+table.t3p-tbl {
+	width: 100%;
+	clear: both;
+	border-collapse: collapse;
+	background: #DDF;
+}
+.tbl-wrapper {
+	border-bottom: 1px solid #AAD;
+}
+table.t3p-tbl thead th {
+	padding: 0.55ex 1.2ex 0.35ex 1.2ex;
+	background: #003;
+	color: white;
+	text-transform: uppercase;
+	font-size: 80%;
+	text-align: left;
+}
+table.t3p-tbl tbody th {
+	background: #BBF;
+}
+table.t3p-tbl tbody tr:hover th {
+	background: #DDF;
+}
+table.t3p-tbl tbody tr:hover td {
+	background: #EEF;
+}
+table.t3p-tbl tbody tr.t3p-sticky th {
+	background: #FDD;
+}
+table.t3p-tbl th, table.t3p-tbl td {
+	padding: 0.25ex 1ex;
+	vertical-align: top;
+	text-align: left;
+}
+table.t3p-tbl a {
+	display: block;
+}
+table.t3p-tbl td.t3p-numeric {
+	/*text-align: center;*/
+}
+#t3p-entries {
+	overflow: hidden;
+	/*padding: 2ex 3ex;	*/
+}
+#t3p-entries > p {
+	margin-left: 1ex;
+	margin-right: 1ex;
+	text-align: center;
+}
+#t3p-form {
+	background: #EEF;
+	padding: 1ex 1ex 1ex 22ex;
+}
+#t3p-post, #t3p-topic, #t3p-forum {
+	border: 1px solid #AAD;
+	width: 100%;
+}
+#t3p-form-metadata, #t3p-form label {
+	float: left;
+	text-align: right;
+	width: 21ex;
+	margin-left: -22ex;
+	font-weight: bold;
+}
+
+/*
+ol.pagination {
+	margin-left: 0;
+	margin-right: 0;
+	padding: 0;
+	text-align: center;
+	list-style: none;
+}
+ol.pagination li {
+	display: inline;
+	padding: 0 0.5ex;
+}
+*/
+.t3p-odd, .t3p-even {
+	margin: 0;
+	padding: 0.5ex;
+	overflow: hidden;
+	border-bottom: 1px solid #AAD;
+}
+.t3p-odd {
+	background: #DDF;
+}
+.t3p-even {
+	background: white;
+}
+.t3p-post-header {
+	font-size: 80%;
+	float: left;
+	text-align: right;
+	width: 14em;
+}
+.t3p-post-body {
+	padding-left: 12em;
+}
+.t3p-post-body p {
+	margin-top: 0;
+}
+
+#t3p-text {
+	margin: 0 1ex;
+}
