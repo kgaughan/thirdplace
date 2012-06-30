@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block body %}
+<div id="t3p-entries">
+
+<div class="tbl-wrapper">
+	<table class="t3p-tbl">
+		<thead>
+			<tr>
+				<th>Forum</th>
+				<th>Latest Active Topic</th>
+				<th>Latest Poster</th>
+				<th width="6%">Topics</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for forum in forums %}
+			<tr>
+				<th><a href="{{ url_for('show_forum', forum.id) }}">{{ forum.forum }}</a></th>
+				<td>
+					{% if forum.topics %}
+						<a href="{{ url_for('show_topic', forum.latest_post.topic.topic_id) }}#p{{ forum.latest_post_id }}">{{ forum.latest_post.topic }}</a>
+					{% else %}
+						<em>No topics.</em>
+					{% endif %}
+				</td>
+				<td>
+					{% if forum.topics %}
+						<a href="{{ url_for('show_user', forum.latest_post.poster_user_id) }}">{{ forum.latest_post.poster.name }}</a>
+					{% else %}
+						&mdash;
+					{% endif %}
+				</td>
+				<td class="t3p-numeric">{{ forum.topics.length }}</td>
+			</tr>
+			{% else %}
+			<tr>
+				<td colspan="4">
+					Sorry, there are no topics. Why not create one?
+				</td>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}
