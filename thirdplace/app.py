@@ -1,11 +1,13 @@
 import flask
 
 from thirdplace.core import app
+from thirdplace import models
 
 
 @app.route('/')
 def show_forums():
-    return flask.render_template('forums.html')
+    forums = models.Forum.query_all()
+    return flask.render_template('forums.html', forums=forums)
 
 
 @app.route('/<int:forum_id>/')

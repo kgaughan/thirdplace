@@ -1,5 +1,7 @@
 from thirdplace.core import db
 
+from sqlalchemy.sql import func
+
 
 class User(db.Model):
 
@@ -26,6 +28,16 @@ class Forum(db.Model):
     latest_post = db.relationship(
         "Post",
         primaryjoin="Forum.latest_post_id==Post.post_id")
+
+    @classmethod
+    def query_all(cls):
+        return cls.query.options(db.joinedload_all(
+            cls.latest_post, Post.topic
+        ), db.joinedload_all(
+            cls.latest_post, Post.poster
+        ), db.undefer(
+            'topic_count'
+        )).all()
 
 
 class Topic(db.Model):
@@ -55,6 +67,14 @@ class Topic(db.Model):
     forum = db.relationship(
         "Forum", backref=db.backref(
             'topics', order_by=topic))
+
+
+# This add a 'topic_count' field to to Forum. Annoyingly, this has to be done
+# completely separately from both tables involved.
+Forum.topic_count = db.column_property(db.select(
+    [func.count()],
+    Topic.forum_id == Forum.forum_id
+).as_scalar().label('topic_count'), deferred=True)
 
 
 class Post(db.Model):
