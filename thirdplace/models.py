@@ -23,6 +23,10 @@ class Forum(db.Model):
         nullable=False)
     forum = db.Column(db.String(128), nullable=False)
 
+    latest_post = db.relationship(
+        "Post",
+        primaryjoin="Forum.latest_post_id==Post.post_id")
+
 
 class Topic(db.Model):
 
@@ -44,8 +48,13 @@ class Topic(db.Model):
     topic = db.Column(db.String(128), nullable=False)
     status = db.Column(db.Integer, nullable=False)
 
+    latest_post = db.relationship(
+        "Post",
+        primaryjoin="Topic.latest_post_id==Post.post_id")
+
     forum = db.relationship(
-        "Forum", backref=db.backref('topics', order_by=topic))
+        "Forum", backref=db.backref(
+            'topics', order_by=topic))
 
 
 class Post(db.Model):
@@ -66,7 +75,11 @@ class Post(db.Model):
     post = db.Column(db.Text, nullable=False)
 
     poster = db.relationship(
-        "User", backref=db.backref('posts', order_by=posted))
+        "User",
+        primaryjoin="Post.poster_user_id==User.user_id",
+        backref=db.backref('posts', order_by=posted))
 
     topic = db.relationship(
-        "Topic", backref=db.backref('posts', order_by=posted))
+        "Topic",
+        primaryjoin="Post.topic_id==Topic.topic_id",
+        backref=db.backref('posts', order_by=posted))
