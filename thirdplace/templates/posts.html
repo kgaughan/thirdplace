@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block breadcrumbs %}
+<a href="{{ url_for('show_forums') }}">Forums</a> &raquo;
+<a href="{{ url_for('show_topics', forum_id=forum_id) }}">{{ forum }}</a> &raquo;
+{{ topic }}
+{% endblock %}
+{% block body %}
+<div id="t3p-entries">
+	{% for post in posts %}
+	<div class="t3p-post t3p-{{ loop.cycle('odd', 'even') }}">
+		<div class="t3p-post-header">
+			<strong><a href="{{ url_for('show_user', user_id=post.poster.user_id) }}">{{ post.poster.name }}</a></strong><br>
+			on <a href="#p{{ post.post_id }}">{{ post.posted }}</a>
+			{% if post.posted != post.modified %}
+				<br>Modified on {{ post.modified }}
+			{% endif %}
+		</div>
+		<div class="t3p-post-body">{{ post.post }}</div>
+	</div>
+	{% endfor %}
+</div>
+
+<?php if (Users::current()->can('post')) { ?>
+<form method="post" action="" id="t3p-form">
+<div>
+<label for="t3p-post">Respond</label>
+<textarea name="post" id="t3p-post" rows="12"></textarea>
+</div>
+<div><input type="submit" value="Post"></div>
+</form>
+<?php } ?>
+{% endblock %}
