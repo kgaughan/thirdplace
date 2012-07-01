@@ -14,30 +14,32 @@ class User(db.Model):
     email = db.Column(db.String(128), nullable=False)
 
 
-class Forum(db.Model):
+class Post(db.Model):
 
-    __tablename__ = 'forums'
+    __tablename__ = 'posts'
 
-    forum_id = db.Column(db.Integer, primary_key=True)
-    latest_post_id = db.Column(
+    post_id = db.Column(db.Integer, primary_key=True)
+    topic_id = db.Column(
         db.Integer,
-        db.ForeignKey('posts.post_id', use_alter=True, name='fk_latest'),
+        db.ForeignKey('topics.topic_id'),
         nullable=False)
-    forum = db.Column(db.String(128), nullable=False)
+    modified = db.Column(db.DateTime, nullable=False)
+    posted = db.Column(db.DateTime, nullable=False)
+    poster_user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.user_id'),
+        nullable=False)
+    post = db.Column(db.Text, nullable=False)
 
-    latest_post = db.relationship(
-        "Post",
-        primaryjoin="Forum.latest_post_id==Post.post_id")
+    poster = db.relationship(
+        "User",
+        primaryjoin="Post.poster_user_id==User.user_id",
+        backref=db.backref('posts', order_by=posted))
 
-    @classmethod
-    def query_all(cls):
-        return cls.query.options(db.joinedload_all(
-            cls.latest_post, Post.topic
-        ), db.joinedload_all(
-            cls.latest_post, Post.poster
-        ), db.undefer(
-            'topic_count'
-        )).all()
+    topic = db.relationship(
+        "Topic",
+        primaryjoin="Post.topic_id==Topic.topic_id",
+        backref=db.backref('posts', order_by=posted))
 
 
 class Topic(db.Model):
@@ -68,38 +70,44 @@ class Topic(db.Model):
         "Forum", backref=db.backref(
             'topics', order_by=topic))
 
+    post_count = db.column_property(
+        db.select([func.count()]).where(Post.topic_id == topic_id),
+        deferred=True)
 
-# This add a 'topic_count' field to to Forum. Annoyingly, this has to be done
-# completely separately from both tables involved.
-Forum.topic_count = db.column_property(db.select(
-    [func.count()],
-    Topic.forum_id == Forum.forum_id
-).as_scalar().label('topic_count'), deferred=True)
+    @classmethod
+    def query_for_forum(cls, forum_id):
+        return cls.query.options(db.joinedload_all(
+            cls.latest_post, Post.poster
+        ), db.undefer(
+            'post_count'
+        )).all()
 
 
-class Post(db.Model):
+class Forum(db.Model):
 
-    __tablename__ = 'posts'
+    __tablename__ = 'forums'
 
-    post_id = db.Column(db.Integer, primary_key=True)
-    topic_id = db.Column(
+    forum_id = db.Column(db.Integer, primary_key=True)
+    latest_post_id = db.Column(
         db.Integer,
-        db.ForeignKey('topics.topic_id'),
+        db.ForeignKey('posts.post_id', use_alter=True, name='fk_latest'),
         nullable=False)
-    modified = db.Column(db.DateTime, nullable=False)
-    posted = db.Column(db.DateTime, nullable=False)
-    poster_user_id = db.Column(
-        db.Integer,
-        db.ForeignKey('users.user_id'),
-        nullable=False)
-    post = db.Column(db.Text, nullable=False)
+    forum = db.Column(db.String(128), nullable=False)
 
-    poster = db.relationship(
-        "User",
-        primaryjoin="Post.poster_user_id==User.user_id",
-        backref=db.backref('posts', order_by=posted))
+    latest_post = db.relationship(
+        "Post",
+        primaryjoin="Forum.latest_post_id==Post.post_id")
 
-    topic = db.relationship(
-        "Topic",
-        primaryjoin="Post.topic_id==Topic.topic_id",
-        backref=db.backref('posts', order_by=posted))
+    topic_count = db.column_property(
+        db.select([func.count()]).where(Topic.forum_id == forum_id),
+        deferred=True)
+
+    @classmethod
+    def query_all(cls):
+        return cls.query.options(db.joinedload_all(
+            cls.latest_post, Post.topic
+        ), db.joinedload_all(
+            cls.latest_post, Post.poster
+        ), db.undefer(
+            'topic_count'
+        )).all()
