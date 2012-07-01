@@ -32,13 +32,13 @@ class Post(db.Model):
     post = db.Column(db.Text, nullable=False)
 
     poster = db.relationship(
-        "User",
-        primaryjoin="Post.poster_user_id==User.user_id",
+        'User',
+        primaryjoin='Post.poster_user_id==User.user_id',
         backref=db.backref('posts', order_by=posted))
 
     topic = db.relationship(
-        "Topic",
-        primaryjoin="Post.topic_id==Topic.topic_id",
+        'Topic',
+        primaryjoin='Post.topic_id==Topic.topic_id',
         backref=db.backref('posts', order_by=posted))
 
 
@@ -63,11 +63,11 @@ class Topic(db.Model):
     status = db.Column(db.Integer, nullable=False)
 
     latest_post = db.relationship(
-        "Post",
-        primaryjoin="Topic.latest_post_id==Post.post_id")
+        'Post',
+        primaryjoin='Topic.latest_post_id==Post.post_id')
 
     forum = db.relationship(
-        "Forum", backref=db.backref(
+        'Forum', backref=db.backref(
             'topics', order_by=topic))
 
     post_count = db.column_property(
@@ -95,8 +95,8 @@ class Forum(db.Model):
     forum = db.Column(db.String(128), nullable=False)
 
     latest_post = db.relationship(
-        "Post",
-        primaryjoin="Forum.latest_post_id==Post.post_id")
+        'Post',
+        primaryjoin='Forum.latest_post_id==Post.post_id')
 
     topic_count = db.column_property(
         db.select([func.count()]).where(Topic.forum_id == forum_id),
