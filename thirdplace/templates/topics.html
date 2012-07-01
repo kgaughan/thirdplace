@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block breadcrumbs %}
+<a href="{{ url_for('show_forums') }}">Forums</a> &raquo;
+{{ forum }}
+{% endblock %}
+{% block body %}
+<div id="t3p-entries">
+	<div class="tbl-wrapper">
+		<table class="t3p-tbl">
+			<thead>
+				<tr>
+					<th>Topic</th>
+					<th>Latest Poster</th>
+					<th>Freshness</th>
+					<th width="6%">Posts</th>
+				</tr>
+			<thead>
+			<tbody>
+				{% for topic in topics %}
+				<tr{% if topic.status == 2 %} class="t3p-sticky"{% endif %}>
+					<th><a href="{{ url_for('show_posts', forum_id=topic.forum_id, topic_id=topic.topic_id) }}">{{ topic.topic }}</a></th>
+					<td><a href="{{ url_for('show_user', user_id=topic.latest_post.poster.user_id) }}">{{ topic.latest_post.poster.name }}</a></td>
+					<td>{{ topic.latest_post.posted }}{% if topic.status == 2 %} (sticky){% endif %}</td>
+					<td class="t3p-numeric">{{ topic.post_count }}</td>
+				</tr>
+				{% else %}
+				<tr>
+					<td colspan="4">
+						Sorry, there are no topics. Why not create one?
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<form method="post" action="" id="t3p-form">
+<div>
+<label for="t3p-post">Start a new topic</label>
+<input type="text" maxlength="128" name="topic" id="t3p-topic"><br>
+<textarea name="post" id="t3p-post" rows="12"></textarea>
+</div>
+<div><input type="submit" value="Post"></div>
+</form>
+{% endblock %}
