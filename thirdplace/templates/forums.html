@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
+{% block breadcrumbs %}
+Forums
+{% endblock %}
 {% block body %}
 <div id="t3p-entries">
-
 <div class="tbl-wrapper">
 	<table class="t3p-tbl">
 		<thead>
@@ -35,8 +37,9 @@
 			{% else %}
 			<tr>
 				<td colspan="4">
-					Sorry, there are no topics. Why not create one?
+					Sorry, there are no forums. Why not create one?
 				</td>
+			</tr>
 			{% endfor %}
 		</tbody>
 	</table>

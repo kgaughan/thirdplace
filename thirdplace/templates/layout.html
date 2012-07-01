@@ -10,7 +10,7 @@
 
 		<div id="header">
 			<h1>The Third Place</h1>
-			<p>{{ breadcrumbs }}</p>
+			<p>{% block breadcrumbs %}{% endblock %}</p>
 		</div>
 
 		{% block body %}{% endblock %}
