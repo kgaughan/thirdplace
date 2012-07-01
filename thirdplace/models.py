@@ -41,6 +41,10 @@ class Post(db.Model):
         primaryjoin='Post.topic_id==Topic.topic_id',
         backref=db.backref('posts', order_by=posted))
 
+    @classmethod
+    def query_for_topic(cls, topic_id):
+        return cls.query.options(db.joinedload_all(cls.poster)).all()
+
 
 class Topic(db.Model):
 
