@@ -45,4 +45,14 @@ Forums
 	</table>
 </div>
 </div>
+
+<?php if (Users::current()->can('post')) { ?>
+<form method="post" action="" id="t3p-form">
+<div>
+<label for="t3p-forum">Create a new forum</label>
+<input type="text" maxlength="128" id="t3p-forum" name="forum">
+</div>
+<div><input type="submit" value="Post"></div>
+</form>
+<?php } ?>
 {% endblock %}
