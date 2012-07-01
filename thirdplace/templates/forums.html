@@ -15,10 +15,10 @@
 		<tbody>
 			{% for forum in forums %}
 			<tr>
-				<th><a href="{{ url_for('show_forum', forum_id=forum.forum_id) }}">{{ forum.forum }}</a></th>
+				<th><a href="{{ url_for('show_topics', forum_id=forum.forum_id) }}">{{ forum.forum }}</a></th>
 				<td>
 					{% if forum.latest_post %}
-						<a href="{{ url_for('show_topic', forum_id=forum.forum_id, topic_id=forum.latest_post.topic.topic_id) }}#p{{ forum.latest_post_id }}">{{ forum.latest_post.topic.topic }}</a>
+						<a href="{{ url_for('show_posts', forum_id=forum.forum_id, topic_id=forum.latest_post.topic.topic_id) }}#p{{ forum.latest_post_id }}">{{ forum.latest_post.topic.topic }}</a>
 					{% else %}
 						<em>No topics.</em>
 					{% endif %}

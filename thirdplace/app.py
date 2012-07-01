@@ -11,12 +11,12 @@ def show_forums():
 
 
 @app.route('/<int:forum_id>/')
-def show_forum(forum_id):
+def show_topics(forum_id):
     return ""
 
 
 @app.route('/<int:forum_id>/<int:topic_id>/')
-def show_topic(forum_id, topic_id):
+def show_posts(forum_id, topic_id):
     return ""
 
 
