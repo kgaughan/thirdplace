@@ -20,13 +20,11 @@
 	{% endfor %}
 </div>
 
-<?php if (Users::current()->can('post')) { ?>
 <form method="post" action="" id="t3p-form">
-<div>
-<label for="t3p-post">Respond</label>
-<textarea name="post" id="t3p-post" rows="12"></textarea>
-</div>
-<div><input type="submit" value="Post"></div>
+	<div>
+		<label for="t3p-post">Respond</label>
+		<textarea name="post" id="t3p-post" rows="12"></textarea>
+	</div>
+	<div><input type="submit" value="Post"></div>
 </form>
-<?php } ?>
 {% endblock %}
