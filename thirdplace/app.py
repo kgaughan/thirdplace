@@ -1,4 +1,5 @@
 import flask
+import httplib
 
 from thirdplace.core import app
 from thirdplace import models
@@ -21,7 +22,7 @@ def show_topics(forum_id):
 def show_posts(forum_id, topic_id):
     topic = models.Topic.query.get_or_404(topic_id)
     if topic.forum_id != forum_id:
-        flask.abort(404)
+        flask.abort(httplib.NOT_FOUND)
     posts = models.Post.query_for_topic(topic_id)
     return flask.render_template(
         'posts.html',
