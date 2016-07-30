@@ -5,7 +5,7 @@ import sys
 
 import click
 
-import thirdplace.models
+from thirdplace import models, views
 
 
 def generate_secret_key():
@@ -42,7 +42,7 @@ def initdb():
     """
     Initialise the database.
     """
-    thirdplace.models.db.create_all()
+    models.db.create_all()
 
 
 @cli.command()
@@ -51,6 +51,14 @@ def secretkey():
     Update the secret key in a settings file.
     """
     replace_secret_key(os.environ['THIRDPLACE_SETTINGS'])
+
+
+@cli.command()
+def run():
+    """
+    Run the development server.
+    """
+    views.app.run()
 
 
 if __name__ == '__main__':
