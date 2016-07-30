@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block breadcrumbs %}
 <a href="{{ url_for('show_forums') }}">Forums</a> &raquo;
-<a href="{{ url_for('show_topics', forum_id=forum_id) }}">{{ forum }}</a> &raquo;
-{{ topic }}
+<a href="{{ url_for('show_topics', forum_id=topic.forum.forum_id) }}">{{ topic.forum.forum }}</a> &raquo;
+{{ topic.topic }}
 {% endblock %}
 {% block body %}
 <div id="t3p-entries">
