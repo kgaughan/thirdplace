@@ -62,7 +62,7 @@ class Topic(db.Model):
     latest_post_id = db.Column(
         db.Integer,
         db.ForeignKey('posts.post_id', use_alter=True, name='fk_latest'),
-        nullable=False)
+        nullable=True)
     topic = db.Column(db.String(128), nullable=False)
     status = db.Column(db.Integer, nullable=False)
 
@@ -95,7 +95,7 @@ class Forum(db.Model):
     latest_post_id = db.Column(
         db.Integer,
         db.ForeignKey('posts.post_id', use_alter=True, name='fk_latest'),
-        nullable=False)
+        nullable=True)
     forum = db.Column(db.String(128), nullable=False)
 
     latest_post = db.relationship(
