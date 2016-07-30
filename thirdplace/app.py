@@ -1,5 +1,6 @@
-import flask
 import httplib
+
+import flask
 
 from thirdplace.core import app
 from thirdplace import models

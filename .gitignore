@@ -13,3 +13,4 @@ _build/
 .coverage
 .tox
 __pycache__
+/.venv

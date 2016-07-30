@@ -1,6 +1,6 @@
-from thirdplace.core import db
-
 from sqlalchemy.sql import func
+
+from thirdplace.core import db
 
 
 class User(db.Model):
