@@ -27,7 +27,7 @@ Forums
 				</td>
 				<td>
 					{% if forum.latest_post %}
-						<a href="{{ url_for('show_user', user_id=forum.latest_post.poster_user_id) }}">{{ forum.latest_post.poster.name }}</a>
+						<a href="{{ url_for('show_user', user_id=forum.latest_post.poster.id) }}">{{ forum.latest_post.poster.name }}</a>
 					{% else %}
 						&mdash;
 					{% endif %}

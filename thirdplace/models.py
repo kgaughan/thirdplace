@@ -15,15 +15,15 @@ db = SQLAlchemy(app)
 
 roles_users = db.Table(
     'roles_users',
-    db.Column('user_id', db.Integer(), db.ForeignKey('users.user_id')),
-    db.Column('role_id', db.Integer(), db.ForeignKey('roles.role_id')))
+    db.Column('user_id', db.Integer(), db.ForeignKey('users.id')),
+    db.Column('role_id', db.Integer(), db.ForeignKey('roles.id')))
 
 
 class Role(db.Model, RoleMixin):
 
     __tablename__ = 'roles'
 
-    role_id = db.Column(db.Integer(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
 
@@ -32,7 +32,7 @@ class User(db.Model, UserMixin):
 
     __tablename__ = 'users'
 
-    user_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(128), nullable=False, unique=True)
     password = db.Column(db.String(40), nullable=False)
@@ -53,18 +53,19 @@ class Post(db.Model):
     topic_id = db.Column(
         db.Integer,
         db.ForeignKey('topics.topic_id'),
+        index=True,
         nullable=False)
     modified = db.Column(db.DateTime, nullable=False)
     posted = db.Column(db.DateTime, nullable=False)
     poster_user_id = db.Column(
         db.Integer,
-        db.ForeignKey('users.user_id'),
+        db.ForeignKey('users.id'),
         nullable=False)
     post = db.Column(db.Text, nullable=False)
 
     poster = db.relationship(
         'User',
-        primaryjoin='Post.poster_user_id==User.user_id',
+        primaryjoin='Post.poster_user_id==User.id',
         backref=db.backref('posts', order_by=posted))
 
     topic = db.relationship(
