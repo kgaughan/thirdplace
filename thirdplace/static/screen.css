@@ -11,24 +11,24 @@ form {
 	padding: 0;
 }
 
-#header {
+header {
 	background: #016;
 	color: #AAF;
 	padding: 2em 1ex 1ex 1ex;
 	line-height: 1.2;
 }
-#header h1 {
+header h1 {
 	font-weight: normal;
 	line-height: 1;
 	margin: 0;
 	font-size: 250%;
 }
-#header p {
+header p {
 	margin: 0;
 	font-weight: bold;
 	color: white;
 }
-#header p a {
+header p a {
 	font-weight: normal;
 	color: #CCF;
 }
