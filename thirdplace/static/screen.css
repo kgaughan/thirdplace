@@ -86,7 +86,8 @@ table.t3p-tbl td.t3p-numeric {
 	background: #EEF;
 	padding: 1ex 1ex 1ex 22ex;
 }
-#t3p-post, #t3p-topic, #t3p-forum {
+#t3p-form input[type=text],
+#t3p-form input[type=password] {
 	border: 1px solid #AAD;
 	width: 100%;
 }

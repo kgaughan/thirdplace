@@ -9,10 +9,8 @@ from thirdplace.core import app
 
 @app.route("/", methods=['GET', 'POST'])
 def show_forums():
-    if request.method == 'POST':
-        if not current_user.is_authenticated:
-            return app.login_manager.unauthorized()
-        return "Hurray!"
+    if request.method == 'POST' and not current_user.is_authenticated:
+        return app.login_manager.unauthorized()
 
     return render_template('forums.html',
                            forums=models.Forum.query_all())
@@ -20,10 +18,8 @@ def show_forums():
 
 @app.route("/<int:forum_id>/", methods=['GET', 'POST'])
 def show_topics(forum_id):
-    if request.method == 'POST':
-        if not current_user.is_authenticated:
-            return app.login_manager.unauthorized()
-        return "Hurray!"
+    if request.method == 'POST' and not current_user.is_authenticated:
+        return app.login_manager.unauthorized()
 
     return render_template('topics.html',
                            forum=models.Forum.query.get(forum_id),
@@ -32,10 +28,8 @@ def show_topics(forum_id):
 
 @app.route("/<int:forum_id>/<int:topic_id>/", methods=['GET', 'POST'])
 def show_posts(forum_id, topic_id):
-    if request.method == 'POST':
-        if not current_user.is_authenticated:
-            return app.login_manager.unauthorized()
-        return "Hurray!"
+    if request.method == 'POST' and not current_user.is_authenticated:
+        return app.login_manager.unauthorized()
 
     topic = models.Topic.query.get(topic_id)
     if forum_id != topic.forum.forum_id:
