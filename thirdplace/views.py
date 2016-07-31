@@ -3,7 +3,7 @@ import http.client
 from flask import abort, render_template, request
 from flask_security.core import current_user
 
-from thirdplace import models
+from thirdplace import forms, models
 from thirdplace.core import app
 
 
@@ -12,8 +12,13 @@ def show_forums():
     if request.method == 'POST' and not current_user.is_authenticated:
         return app.login_manager.unauthorized()
 
+    form = forms.CreateForum()
+    if form.validate_on_submit():
+        return "Hurray!"
+
     return render_template('forums.html',
-                           forums=models.Forum.query_all())
+                           forums=models.Forum.query_all(),
+                           form=form)
 
 
 @app.route("/<int:forum_id>/", methods=['GET', 'POST'])

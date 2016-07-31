@@ -48,9 +48,10 @@ Forums
 
 {% if current_user.is_authenticated %}
 <form method="post" action="" id="t3p-form">
+	{{ form.hidden_tag() }}
 	<div>
-		<label for="t3p-forum">Create a new forum</label>
-		<input type="text" maxlength="128" id="t3p-forum" name="forum">
+		{{ form.forum.label }}
+		{{ form.forum(maxlength=128) }}
 	</div>
 	<div><input type="submit" value="Post"></div>
 </form>
