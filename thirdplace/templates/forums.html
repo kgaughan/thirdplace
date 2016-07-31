@@ -46,6 +46,7 @@ Forums
 </div>
 </div>
 
+{% if current_user.is_authenticated %}
 <form method="post" action="" id="t3p-form">
 	<div>
 		<label for="t3p-forum">Create a new forum</label>
@@ -53,4 +54,5 @@ Forums
 	</div>
 	<div><input type="submit" value="Post"></div>
 </form>
+{% endif %}
 {% endblock %}
