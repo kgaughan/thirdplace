@@ -142,6 +142,10 @@ class Forum(db.Model):
         db.select([func.count()]).where(Topic.forum_id == forum_id),
         deferred=True)
 
+    def __init__(self, forum):
+        super().__init__()
+        self.forum = forum
+
     @classmethod
     def query_all(cls):
         return cls.query.options(db.joinedload_all(

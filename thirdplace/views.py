@@ -1,6 +1,6 @@
 import http.client
 
-from flask import abort, render_template, request
+from flask import abort, redirect, render_template, request, url_for
 from flask_security.core import current_user
 
 from thirdplace import forms, models
@@ -14,7 +14,10 @@ def show_forums():
 
     form = forms.CreateForum()
     if form.validate_on_submit():
-        return "Hurray!"
+        forum = models.Forum(form.forum.data)
+        models.db.session.add(forum)
+        models.db.session.commit()
+        return redirect(url_for('show_topics', forum_id=forum.forum_id))
 
     return render_template('forums.html',
                            forums=models.Forum.query_all(),
