@@ -91,6 +91,8 @@ table.t3p-tbl td.t3p-numeric {
 #t3p-form input[type=password] {
 	border: 1px solid #AAD;
 	width: 100%;
+	/* Fix sizing so the borders all align. */
+	box-sizing: border-box;
 }
 #t3p-form-metadata, #t3p-form label {
 	float: left;
