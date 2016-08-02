@@ -9,6 +9,7 @@
 	{% for post in posts %}
 	<div class="t3p-post t3p-{{ loop.cycle('odd', 'even') }}">
 		<div class="t3p-post-header">
+			<div><img src="{{ post.poster.email|gravatar }}" width="64" height="64"></div>
 			<strong><a href="{{ url_for('show_user', user_id=post.poster.id) }}">{{ post.poster.name }}</a></strong><br>
 			on <a href="#p{{ post.post_id }}">{{ post.posted }}</a>
 			{% if post.posted != post.modified %}
