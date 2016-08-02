@@ -20,11 +20,14 @@
 	{% endfor %}
 </div>
 
+{% if current_user.is_authenticated %}
 <form method="post" action="" id="t3p-form">
+	{{ form.hidden_tag() }}
 	<div>
-		<label for="t3p-post">Respond</label>
-		<textarea name="post" id="t3p-post" rows="12"></textarea>
+		{{ form.post.label }}
+		{{ form.post(rows=10) }}
 	</div>
 	<div><input type="submit" value="Post"></div>
 </form>
+{% endif %}
 {% endblock %}

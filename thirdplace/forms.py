@@ -17,3 +17,8 @@ class CreateTopic(Form):
                                     length(max=128)])
 
     post = TextAreaField('')
+
+
+class Post(Form):
+
+    post = TextAreaField('Respond')

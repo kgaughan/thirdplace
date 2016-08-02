@@ -60,9 +60,22 @@ def show_posts(forum_id, topic_id):
     topic = models.Topic.query.get(topic_id)
     if forum_id != topic.forum.forum_id:
         abort(http.client.NOT_FOUND)
+
+    form = forms.Post()
+    if form.validate_on_submit():
+        post = models.Post(topic, form.post.data, poster=current_user)
+        models.db.session.add(post)
+        models.db.session.commit()
+
+        return redirect(url_for('show_posts',
+                                forum_id=forum_id,
+                                topic_id=topic_id) +
+                        '#p{}'.format(post.post_id))
+
     return render_template('posts.html',
                            topic=topic,
-                           posts=models.Post.query_for_topic(topic_id))
+                           posts=models.Post.query_for_topic(topic_id),
+                           form=form)
 
 
 @app.route("/users/<int:user_id>")
