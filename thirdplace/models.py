@@ -75,7 +75,11 @@ class Post(db.Model):
 
     @classmethod
     def query_for_topic(cls, topic_id):
-        return cls.query.options(db.joinedload_all(cls.poster)).all()
+        return cls.query.options(
+            db.joinedload_all(cls.poster)
+        ).filter_by(
+            topic_id=topic_id
+        ).all()
 
 
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
@@ -120,7 +124,7 @@ class Topic(db.Model):
             cls.latest_post, Post.poster
         ), db.undefer(
             'post_count'
-        )).all()
+        )).filter_by(forum_id=forum_id).all()
 
 
 class Forum(db.Model):
