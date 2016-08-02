@@ -15,7 +15,7 @@
 				<br>Modified on {{ post.modified }}
 			{% endif %}
 		</div>
-		<div class="t3p-post-body">{{ post.post }}</div>
+		<div class="t3p-post-body">{{ post.post|bbcode|safe }}</div>
 	</div>
 	{% endfor %}
 </div>
