@@ -1,3 +1,5 @@
+import datetime
+
 from flask_security import (
     RoleMixin,
     SQLAlchemyUserDatastore,
@@ -73,6 +75,14 @@ class Post(db.Model):
         primaryjoin='Post.topic_id==Topic.topic_id',
         backref=db.backref('posts', order_by=posted))
 
+    def __init__(self, topic, post, poster):
+        super().__init__()
+        self.topic = topic
+        self.post = post
+        self.poster = poster
+        self.posted = datetime.datetime.utcnow()
+        self.modified = datetime.datetime.utcnow()
+
     @classmethod
     def query_for_topic(cls, topic_id):
         return cls.query.options(
@@ -117,6 +127,13 @@ class Topic(db.Model):
     post_count = db.column_property(
         db.select([func.count()]).where(Post.topic_id == topic_id),
         deferred=True)
+
+    def __init__(self, forum_id, topic, status):
+        assert status in (self.CLOSED, self.ACTIVE, self.STICKY)
+        super().__init__()
+        self.forum_id = forum_id
+        self.topic = topic
+        self.status = status
 
     @classmethod
     def query_for_forum(cls, forum_id):

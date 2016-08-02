@@ -29,9 +29,27 @@ def show_topics(forum_id):
     if request.method == 'POST' and not current_user.is_authenticated:
         return app.login_manager.unauthorized()
 
+    form = forms.CreateTopic()
+    if form.validate_on_submit():
+        topic = models.Topic(forum_id, form.topic.data, models.Topic.ACTIVE)
+        post = models.Post(topic, form.post.data, poster=current_user)
+        models.db.session.add(topic)
+        models.db.session.add(post)
+        models.db.session.commit()
+
+        topic.latest_post = post
+        topic.forum.latest_post = post
+        models.db.session.add(topic)
+        models.db.session.commit()
+
+        return redirect(url_for('show_posts',
+                                forum_id=forum_id,
+                                topic_id=topic.topic_id))
+
     return render_template('topics.html',
                            forum=models.Forum.query.get(forum_id),
-                           topics=models.Topic.query_for_forum(forum_id))
+                           topics=models.Topic.query_for_forum(forum_id),
+                           form=form)
 
 
 @app.route("/<int:forum_id>/<int:topic_id>/", methods=['GET', 'POST'])
