@@ -35,8 +35,7 @@ def show_topics(forum_id):
         post = models.Post(topic, form.post.data, poster=current_user)
         models.db.session.add(topic)
         models.db.session.add(post)
-        models.db.session.commit()
-
+        models.db.session.flush()
         topic.latest_post = post
         topic.forum.latest_post = post
         models.db.session.add(topic)
@@ -65,6 +64,10 @@ def show_posts(forum_id, topic_id):
     if form.validate_on_submit():
         post = models.Post(topic, form.post.data, poster=current_user)
         models.db.session.add(post)
+        models.db.session.flush()
+        topic.latest_post = post
+        topic.forum.latest_post = post
+        models.db.session.add(topic)
         models.db.session.commit()
 
         return redirect(url_for('show_posts',
