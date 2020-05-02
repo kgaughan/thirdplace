@@ -5,20 +5,18 @@ from wtforms.validators import DataRequired, length
 
 class CreateForum(Form):
 
-    forum = StringField('Create a new forum',
-                        validators=[DataRequired(),
-                                    length(max=128)])
+    forum = StringField(
+        "Create a new forum", validators=[DataRequired(), length(max=128)]
+    )
 
 
 class CreateTopic(Form):
 
-    topic = StringField('Topic title',
-                        validators=[DataRequired(),
-                                    length(max=128)])
+    topic = StringField("Topic title", validators=[DataRequired(), length(max=128)])
 
-    post = TextAreaField('')
+    post = TextAreaField("")
 
 
 class Post(Form):
 
-    post = TextAreaField('Respond')
+    post = TextAreaField("Respond")

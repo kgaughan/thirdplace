@@ -7,9 +7,9 @@ from thirdplace import forms, models
 from thirdplace.core import app
 
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/", methods=["GET", "POST"])
 def show_forums():
-    if request.method == 'POST' and not current_user.is_authenticated:
+    if request.method == "POST" and not current_user.is_authenticated:
         return app.login_manager.unauthorized()
 
     form = forms.CreateForum()
@@ -17,16 +17,14 @@ def show_forums():
         forum = models.Forum(form.forum.data)
         models.db.session.add(forum)
         models.db.session.commit()
-        return redirect(url_for('show_topics', forum_id=forum.forum_id))
+        return redirect(url_for("show_topics", forum_id=forum.forum_id))
 
-    return render_template('forums.html',
-                           forums=models.Forum.query_all(),
-                           form=form)
+    return render_template("forums.html", forums=models.Forum.query_all(), form=form)
 
 
-@app.route("/<int:forum_id>/", methods=['GET', 'POST'])
+@app.route("/<int:forum_id>/", methods=["GET", "POST"])
 def show_topics(forum_id):
-    if request.method == 'POST' and not current_user.is_authenticated:
+    if request.method == "POST" and not current_user.is_authenticated:
         return app.login_manager.unauthorized()
 
     form = forms.CreateTopic()
@@ -41,19 +39,21 @@ def show_topics(forum_id):
         models.db.session.add(topic)
         models.db.session.commit()
 
-        return redirect(url_for('show_posts',
-                                forum_id=forum_id,
-                                topic_id=topic.topic_id))
+        return redirect(
+            url_for("show_posts", forum_id=forum_id, topic_id=topic.topic_id)
+        )
 
-    return render_template('topics.html',
-                           forum=models.Forum.query.get(forum_id),
-                           topics=models.Topic.query_for_forum(forum_id),
-                           form=form)
+    return render_template(
+        "topics.html",
+        forum=models.Forum.query.get(forum_id),
+        topics=models.Topic.query_for_forum(forum_id),
+        form=form,
+    )
 
 
-@app.route("/<int:forum_id>/<int:topic_id>/", methods=['GET', 'POST'])
+@app.route("/<int:forum_id>/<int:topic_id>/", methods=["GET", "POST"])
 def show_posts(forum_id, topic_id):
-    if request.method == 'POST' and not current_user.is_authenticated:
+    if request.method == "POST" and not current_user.is_authenticated:
         return app.login_manager.unauthorized()
 
     topic = models.Topic.query.get(topic_id)
@@ -70,15 +70,17 @@ def show_posts(forum_id, topic_id):
         models.db.session.add(topic)
         models.db.session.commit()
 
-        return redirect(url_for('show_posts',
-                                forum_id=forum_id,
-                                topic_id=topic_id) +
-                        '#p{}'.format(post.post_id))
+        return redirect(
+            url_for("show_posts", forum_id=forum_id, topic_id=topic_id)
+            + "#p{}".format(post.post_id)
+        )
 
-    return render_template('posts.html',
-                           topic=topic,
-                           posts=models.Post.query_for_topic(topic_id),
-                           form=form)
+    return render_template(
+        "posts.html",
+        topic=topic,
+        posts=models.Post.query_for_topic(topic_id),
+        form=form,
+    )
 
 
 @app.route("/users/<int:user_id>")

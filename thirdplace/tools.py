@@ -21,10 +21,10 @@ def replace_secret_key(settings_path):
     """
     Update the given settings file with a new secret key.
     """
-    with open(settings_path, 'r+') as fh:
+    with open(settings_path, "r+") as fh:
         lines = []
         for line in fh:
-            if not re.match('^ *SECRET_KEY', line):
+            if not re.match("^ *SECRET_KEY", line):
                 lines.append(line)
         lines.append("SECRET_KEY = %r\n" % generate_secret_key())
         fh.seek(0)
@@ -50,7 +50,7 @@ def secretkey():
     """
     Update the secret key in a settings file.
     """
-    replace_secret_key(os.environ['THIRDPLACE_SETTINGS'])
+    replace_secret_key(os.environ["THIRDPLACE_SETTINGS"])
 
 
 @cli.command()
@@ -61,5 +61,5 @@ def run():
     views.app.run()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli()
