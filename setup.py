@@ -26,7 +26,7 @@ setup(
     install_requires=(
         'bbcode==1.0.24',
         'click==6.6',
-        'Flask==0.11.1',
+        'Flask==1.0',
         'Flask-Security==1.7.5',
         'Flask-SQLAlchemy==2.1',
         'Flask-WTF==0.12',
