@@ -1,0 +1,11 @@
+* Use roles to determine who can create new forums and topics.
+* Format dates properly.
+* Come up with a proper skin.
+* Get rid of the extensive use of IDs and use classes instead.
+* Pagination.
+* Proper password handling.
+* Registration.
+* User update.
+* Skinning.
+* Documentation.
+* Search.
