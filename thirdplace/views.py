@@ -71,9 +71,12 @@ def show_posts(forum_id, topic_id):
         models.db.session.commit()
 
         return redirect(
-            url_for("show_posts", forum_id=forum_id, topic_id=topic_id)
-            + "#p{}".format(post.post_id)
+            (
+                url_for("show_posts", forum_id=forum_id, topic_id=topic_id)
+                + f"#p{post.post_id}"
+            )
         )
+
 
     return render_template(
         "posts.html",
