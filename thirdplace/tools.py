@@ -22,10 +22,7 @@ def replace_secret_key(settings_path):
     Update the given settings file with a new secret key.
     """
     with open(settings_path, "r+") as fh:
-        lines = []
-        for line in fh:
-            if not re.match("^ *SECRET_KEY", line):
-                lines.append(line)
+        lines = [line for line in fh if not re.match("^ *SECRET_KEY", line)]
         lines.append("SECRET_KEY = %r\n" % generate_secret_key())
         fh.seek(0)
         fh.truncate()
