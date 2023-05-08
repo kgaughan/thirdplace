@@ -1,14 +1,13 @@
 import base64
 import os
 import re
-import sys
 
 import click
 
 from thirdplace import models, views
 
 
-def generate_secret_key():
+def generate_secret_key() -> bytes:
     """
     Generate a string suitable for use as a secret key.
     """
@@ -17,7 +16,7 @@ def generate_secret_key():
     return base64.b64encode(os.urandom(48))
 
 
-def replace_secret_key(settings_path):
+def replace_secret_key(settings_path: str):
     """
     Update the given settings file with a new secret key.
     """

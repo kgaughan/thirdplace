@@ -1,11 +1,10 @@
 import datetime
 
-from flask_security import RoleMixin, SQLAlchemyUserDatastore, Security, UserMixin
+from flask_security import RoleMixin, Security, SQLAlchemyUserDatastore, UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
 from thirdplace.core import app
-
 
 db = SQLAlchemy(app)
 
@@ -18,7 +17,6 @@ roles_users = db.Table(
 
 
 class Role(db.Model, RoleMixin):
-
     __tablename__ = "roles"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -27,7 +25,6 @@ class Role(db.Model, RoleMixin):
 
 
 class User(db.Model, UserMixin):
-
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -38,17 +35,21 @@ class User(db.Model, UserMixin):
     confirmed_at = db.Column(db.DateTime())
 
     roles = db.relationship(
-        "Role", secondary=roles_users, backref=db.backref("users", lazy="dynamic")
+        "Role",
+        secondary=roles_users,
+        backref=db.backref("users", lazy="dynamic"),
     )
 
 
 class Post(db.Model):
-
     __tablename__ = "posts"
 
     post_id = db.Column(db.Integer, primary_key=True)
     topic_id = db.Column(
-        db.Integer, db.ForeignKey("topics.topic_id"), index=True, nullable=False
+        db.Integer,
+        db.ForeignKey("topics.topic_id"),
+        index=True,
+        nullable=False,
     )
     modified = db.Column(db.DateTime, nullable=False)
     posted = db.Column(db.DateTime, nullable=False)
@@ -76,7 +77,7 @@ class Post(db.Model):
         self.modified = datetime.datetime.utcnow()
 
     @classmethod
-    def query_for_topic(cls, topic_id):
+    def query_for_topic(cls, topic_id: int):
         return (
             cls.query.options(db.joinedload_all(cls.poster))
             .filter_by(topic_id=topic_id)
@@ -89,7 +90,6 @@ security = Security(app, user_datastore)
 
 
 class Topic(db.Model):
-
     __tablename__ = "topics"
 
     CLOSED = 0
@@ -107,16 +107,18 @@ class Topic(db.Model):
     status = db.Column(db.Integer, nullable=False)
 
     latest_post = db.relationship(
-        "Post", primaryjoin="Topic.latest_post_id==Post.post_id"
+        "Post",
+        primaryjoin="Topic.latest_post_id==Post.post_id",
     )
 
     forum = db.relationship("Forum", backref=db.backref("topics", order_by=topic))
 
     post_count = db.column_property(
-        db.select([func.count()]).where(Post.topic_id == topic_id), deferred=True
+        db.select([func.count()]).where(Post.topic_id == topic_id),
+        deferred=True,
     )
 
-    def __init__(self, forum_id, topic, status):
+    def __init__(self, forum_id: int, topic: str, status):
         assert status in (self.CLOSED, self.ACTIVE, self.STICKY)
         super().__init__()
         self.forum_id = forum_id
@@ -124,7 +126,7 @@ class Topic(db.Model):
         self.status = status
 
     @classmethod
-    def query_for_forum(cls, forum_id):
+    def query_for_forum(cls, forum_id: int):
         return (
             cls.query.options(
                 db.joinedload_all(cls.latest_post, Post.poster),
@@ -136,7 +138,6 @@ class Topic(db.Model):
 
 
 class Forum(db.Model):
-
     __tablename__ = "forums"
 
     forum_id = db.Column(db.Integer, primary_key=True)
@@ -148,14 +149,16 @@ class Forum(db.Model):
     forum = db.Column(db.String(128), nullable=False)
 
     latest_post = db.relationship(
-        "Post", primaryjoin="Forum.latest_post_id==Post.post_id"
+        "Post",
+        primaryjoin="Forum.latest_post_id==Post.post_id",
     )
 
     topic_count = db.column_property(
-        db.select([func.count()]).where(Topic.forum_id == forum_id), deferred=True
+        db.select([func.count()]).where(Topic.forum_id == forum_id),
+        deferred=True,
     )
 
-    def __init__(self, forum):
+    def __init__(self, forum: str):
         super().__init__()
         self.forum = forum
 
