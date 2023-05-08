@@ -23,7 +23,7 @@ def show_forums():
 
 
 @app.route("/<int:forum_id>/", methods=["GET", "POST"])
-def show_topics(forum_id):
+def show_topics(forum_id: int):
     if request.method == "POST" and not current_user.is_authenticated:
         return app.login_manager.unauthorized()
 
@@ -52,7 +52,7 @@ def show_topics(forum_id):
 
 
 @app.route("/<int:forum_id>/<int:topic_id>/", methods=["GET", "POST"])
-def show_posts(forum_id, topic_id):
+def show_posts(forum_id: int, topic_id: int):
     if request.method == "POST" and not current_user.is_authenticated:
         return app.login_manager.unauthorized()
 
@@ -77,7 +77,6 @@ def show_posts(forum_id, topic_id):
             )
         )
 
-
     return render_template(
         "posts.html",
         topic=topic,
@@ -87,5 +86,5 @@ def show_posts(forum_id, topic_id):
 
 
 @app.route("/users/<int:user_id>")
-def show_user(user_id):
+def show_user(user_id: int):
     pass
