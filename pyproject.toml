@@ -8,26 +8,27 @@ dynamic = ["version"]
 description = "Thirdplace"
 license = "MIT"
 authors = [
-    {name = "Keith Gaughan", email = "k@stereochro.me"},
+	{name = "Keith Gaughan", email = "k@stereochro.me"},
 ]
 requires-python = ">=3.7"
 readme = "README.rst"
 classifiers = [
-    "Environment :: Other Environment",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.7",
-    "Topic :: Internet :: WWW/HTTP",
-    "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+	"Environment :: Other Environment",
+	"License :: OSI Approved :: MIT License",
+	"Operating System :: OS Independent",
+	"Programming Language :: Python",
+	"Programming Language :: Python :: 3.7",
+	"Topic :: Internet :: WWW/HTTP",
+	"Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
 ]
 dependencies = [
-    "bbcode==1.1.0",
-    "click==8.1.3",
-    "Flask==2.3.2",
-    "Flask-Security==3.0.0",
-    "Flask-SQLAlchemy==3.0.3",
-    "Flask-WTF==0.15.1",
+	"bbcode==1.1.0",
+	"click==8.1.3",
+	"Flask==2.3.2",
+	"Flask-Security-Too==5.2.0",
+	"Flask-SQLAlchemy==3.0.3",
+	"Flask-WTF==1.1.1",
+	"pytz",
 ]
 
 [project.scripts]
