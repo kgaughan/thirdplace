@@ -1,16 +1,16 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField
 from wtforms.validators import DataRequired, length
 
 
-class CreateForum(Form):
+class CreateForum(FlaskForm):
     forum = StringField(
         "Create a new forum",
         validators=[DataRequired(), length(max=128)],
     )
 
 
-class CreateTopic(Form):
+class CreateTopic(FlaskForm):
     topic = StringField(
         "Topic title",
         validators=[DataRequired(), length(max=128)],
@@ -19,5 +19,5 @@ class CreateTopic(Form):
     post = TextAreaField("")
 
 
-class Post(Form):
+class Post(FlaskForm):
     post = TextAreaField("Respond")

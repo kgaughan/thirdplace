@@ -34,6 +34,13 @@ class User(db.Model, UserMixin):
     active = db.Column(db.Boolean())
     confirmed_at = db.Column(db.DateTime())
 
+    # flask-security
+    fs_uniquifier = db.Column(
+        db.String(64),
+        unique=True,
+        nullable=False,
+    )
+
     roles = db.relationship(
         "Role",
         secondary=roles_users,
@@ -79,7 +86,7 @@ class Post(db.Model):
     @classmethod
     def query_for_topic(cls, topic_id: int):
         return (
-            cls.query.options(db.joinedload_all(cls.poster))
+            cls.query.options(db.joinedload(cls.poster))
             .filter_by(topic_id=topic_id)
             .all()
         )
@@ -114,7 +121,7 @@ class Topic(db.Model):
     forum = db.relationship("Forum", backref=db.backref("topics", order_by=topic))
 
     post_count = db.column_property(
-        db.select([func.count()]).where(Post.topic_id == topic_id),
+        db.select(func.count()).where(Post.topic_id == topic_id).scalar_subquery(),
         deferred=True,
     )
 
@@ -129,8 +136,8 @@ class Topic(db.Model):
     def query_for_forum(cls, forum_id: int):
         return (
             cls.query.options(
-                db.joinedload_all(cls.latest_post, Post.poster),
-                db.undefer("post_count"),
+                db.joinedload(cls.latest_post, Post.poster),
+                db.undefer(cls.post_count),
             )
             .filter_by(forum_id=forum_id)
             .all()
@@ -154,7 +161,7 @@ class Forum(db.Model):
     )
 
     topic_count = db.column_property(
-        db.select([func.count()]).where(Topic.forum_id == forum_id),
+        db.select(func.count()).where(Topic.forum_id == forum_id).scalar_subquery(),
         deferred=True,
     )
 
@@ -165,7 +172,7 @@ class Forum(db.Model):
     @classmethod
     def query_all(cls):
         return cls.query.options(
-            db.joinedload_all(cls.latest_post, Post.topic),
-            db.joinedload_all(cls.latest_post, Post.poster),
-            db.undefer("topic_count"),
+            db.joinedload(cls.latest_post, Post.topic),
+            db.joinedload(cls.latest_post, Post.poster),
+            db.undefer(cls.topic_count),
         ).all()
