@@ -77,11 +77,12 @@ class Post(db.Model):
 
     def __init__(self, topic, post, poster):
         super().__init__()
+        now = datetime.datetime.now(datetime.timezone.utc)
         self.topic = topic
         self.post = post
         self.poster = poster
-        self.posted = datetime.datetime.utcnow()
-        self.modified = datetime.datetime.utcnow()
+        self.posted = now
+        self.modified = now
 
     @classmethod
     def query_for_topic(cls, topic_id: int):

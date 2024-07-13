@@ -23,7 +23,7 @@ def show_topics(forum_id: int):
 def show_posts(forum_id: int, topic_id: int):
     topic = models.Topic.query.get_or_404(topic_id)
     if topic.forum_id != forum_id:
-        flask.abort(http.NOT_FOUND)
+        flask.abort(http.HTTPStatus.NOT_FOUND)
     posts = models.Post.query_for_topic(topic_id)
     return flask.render_template(
         "posts.html",
