@@ -65,7 +65,7 @@ flask-wtf==1.2.1 \
     --hash=sha256:fa6793f2fb7e812e0fe9743b282118e581fb1b6c45d414b8af05e659bd653287
     # via flask-security-too
     # via thirdplace
-greenlet==3.0.3 ; python_version < '3.13' and (platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'WIN32' or platform_machine == 'win32')))))) \
+greenlet==3.0.3 ; (python_full_version < '3.13' and platform_machine == 'AMD64') or (python_full_version < '3.13' and platform_machine == 'WIN32') or (python_full_version < '3.13' and platform_machine == 'aarch64') or (python_full_version < '3.13' and platform_machine == 'amd64') or (python_full_version < '3.13' and platform_machine == 'ppc64le') or (python_full_version < '3.13' and platform_machine == 'win32') or (python_full_version < '3.13' and platform_machine == 'x86_64') \
     --hash=sha256:01bc7ea167cf943b4c802068e178bbf70ae2e8c080467070d01bfa02f337ee67 \
     --hash=sha256:0448abc479fab28b00cb472d278828b3ccca164531daab4e970a0458786055d6 \
     --hash=sha256:086152f8fbc5955df88382e8a75984e2bb1c892ad2e3c80a2508954e52295257 \
@@ -129,7 +129,7 @@ idna==3.7 \
     --hash=sha256:028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc \
     --hash=sha256:82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0
     # via email-validator
-importlib-metadata==8.0.0 ; python_version < '3.10' \
+importlib-metadata==8.0.0 ; python_full_version < '3.10' \
     --hash=sha256:15584cf2b1bf449d98ff8a6ff1abef57bf20f3ac6454f431736cd3e660921b2f \
     --hash=sha256:188bd24e4c346d3f0a933f275c2fec67050326a856b9a359881d7c2a697e8812
     # via flask
@@ -284,7 +284,7 @@ wtforms==3.1.2 \
     --hash=sha256:f8d76180d7239c94c6322f7990ae1216dae3659b7aa1cee94b6318bdffb474b9
     # via flask-security-too
     # via flask-wtf
-zipp==3.19.2 ; python_version < '3.10' \
+zipp==3.19.2 ; python_full_version < '3.10' \
     --hash=sha256:bf1dcf6450f873a13e952a29504887c89e6de7506209e5b1bcc3460135d4de19 \
     --hash=sha256:f091755f667055f2d02b32c53771a7a6c8b47e1fdbc4b72a8b9072b3eef8015c
     # via importlib-metadata
