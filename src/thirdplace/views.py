@@ -1,7 +1,7 @@
 import http.client
 
 from flask import abort, redirect, render_template, request, url_for
-from flask_security.core import current_user
+from flask_security import current_user  # type: ignore
 
 from thirdplace import forms, models
 from thirdplace.core import app
@@ -39,9 +39,7 @@ def show_topics(forum_id: int):
         models.db.session.add(topic)
         models.db.session.commit()
 
-        return redirect(
-            url_for("show_posts", forum_id=forum_id, topic_id=topic.topic_id)
-        )
+        return redirect(url_for("show_posts", forum_id=forum_id, topic_id=topic.topic_id))
 
     return render_template(
         "topics.html",
@@ -70,12 +68,7 @@ def show_posts(forum_id: int, topic_id: int):
         models.db.session.add(topic)
         models.db.session.commit()
 
-        return redirect(
-
-                url_for("show_posts", forum_id=forum_id, topic_id=topic_id)
-                + f"#p{post.post_id}"
-
-        )
+        return redirect(url_for("show_posts", forum_id=forum_id, topic_id=topic_id) + f"#p{post.post_id}")
 
     return render_template(
         "posts.html",

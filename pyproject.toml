@@ -56,11 +56,11 @@ universal = true
 generate-hashes = true
 managed = true
 
+[tool.rye.scripts.devserver]
+cmd = "flask --app thirdplace.app:app --debug run"
+
 [tool.hatch.build.targets.sdist]
-include = [
-  "/src/thirdplace",
-  "/requirements.lock",
-]
+include = ["/src/thirdplace", "/requirements.lock"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/thirdplace"]

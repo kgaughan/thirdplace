@@ -1,6 +1,7 @@
 import datetime
 
-from flask_security import RoleMixin, Security, SQLAlchemyUserDatastore, UserMixin
+from flask_security.core import RoleMixin, Security, UserMixin
+from flask_security.datastore import SQLAlchemyUserDatastore
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
@@ -86,11 +87,7 @@ class Post(db.Model):
 
     @classmethod
     def query_for_topic(cls, topic_id: int):
-        return (
-            cls.query.options(db.joinedload(cls.poster))
-            .filter_by(topic_id=topic_id)
-            .all()
-        )
+        return cls.query.options(db.joinedload(cls.poster)).filter_by(topic_id=topic_id).all()
 
 
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
