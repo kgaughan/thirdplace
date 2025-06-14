@@ -45,19 +45,14 @@ Source = "https://github.com/kgaughan/thirdplace"
 [project.scripts]
 thirdplace-tool = "thirdplace.tools:cli"
 
-[tool.rye]
+[tool.uv]
 dev-dependencies = [
   "mypy>=1.10.1",
   "pytest>=8.2.2",
   "pytest-cov>=2.12.1",
   "types-flask>=1.1.6",
 ]
-universal = true
-generate-hashes = true
 managed = true
-
-[tool.rye.scripts.devserver]
-cmd = "flask --app thirdplace.app:app --debug run"
 
 [tool.hatch.build.targets.sdist]
 include = ["/src/thirdplace", "/requirements.lock"]
