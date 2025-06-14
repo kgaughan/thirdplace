@@ -55,7 +55,7 @@ dev-dependencies = [
 managed = true
 
 [tool.hatch.build.targets.sdist]
-include = ["/src/thirdplace", "/requirements.lock"]
+include = ["/src/thirdplace", "/uv.lock"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/thirdplace"]
