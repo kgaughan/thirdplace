@@ -3,8 +3,9 @@ import os
 import re
 
 import click
+import dotenv
 
-from thirdplace import core, models, views
+from thirdplace import app, models
 
 
 def generate_secret_key(length: int) -> bytes:
@@ -28,7 +29,7 @@ def replace_field(settings_path: str, field: str, length: int):
 
 @click.group()
 def cli():
-    pass
+    dotenv.load_dotenv()
 
 
 @cli.command()
@@ -36,7 +37,7 @@ def initdb():
     """
     Initialise the database.
     """
-    with core.app.app_context():
+    with app.app.app_context():
         models.db.create_all()
 
 
@@ -63,8 +64,4 @@ def run():
     """
     Run the development server.
     """
-    views.app.run()
-
-
-if __name__ == "__main__":
-    cli()
+    app.app.run()

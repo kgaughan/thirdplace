@@ -1,13 +1,24 @@
 import http.client
 
-from flask import abort, redirect, render_template, request, url_for
+import bbcode
+from flask import (
+    Blueprint,
+    abort,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from flask_security import current_user  # type: ignore
 
-from thirdplace import forms, models
-from thirdplace.core import app
+from . import forms, gravatar, models
 
+forum = Blueprint("forum", __name__)
+forum.add_app_template_filter(bbcode.render_html, "bbcode")
+forum.add_app_template_filter(gravatar.gravatar, "gravatar")
+forum.add_app_template_global(current_user, "current_user")
 
-@app.route("/", methods=["GET", "POST"])
+@forum.route("/", methods=["GET", "POST"])
 def show_forums():
     if request.method == "POST" and not current_user.is_authenticated:
         return app.login_manager.unauthorized()
@@ -22,7 +33,7 @@ def show_forums():
     return render_template("forums.html", forums=models.Forum.query_all(), form=form)
 
 
-@app.route("/<int:forum_id>/", methods=["GET", "POST"])
+@forum.route("/<int:forum_id>/", methods=["GET", "POST"])
 def show_topics(forum_id: int):
     if request.method == "POST" and not current_user.is_authenticated:
         return app.login_manager.unauthorized()
@@ -48,8 +59,7 @@ def show_topics(forum_id: int):
         form=form,
     )
 
-
-@app.route("/<int:forum_id>/<int:topic_id>/", methods=["GET", "POST"])
+@forum.route("/<int:forum_id>/<int:topic_id>/", methods=["GET", "POST"])
 def show_posts(forum_id: int, topic_id: int):
     if request.method == "POST" and not current_user.is_authenticated:
         return app.login_manager.unauthorized()
@@ -78,6 +88,11 @@ def show_posts(forum_id: int, topic_id: int):
     )
 
 
-@app.route("/users/<int:user_id>")
+@forum.route("/users/<int:user_id>/")
 def show_user(user_id: int):
-    pass
+    return ""
+
+
+@forum.route("/users/<int:user_id>/posts/")
+def show_user_posts(user_id: int):
+    return ""

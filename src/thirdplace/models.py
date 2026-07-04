@@ -1,13 +1,10 @@
 import datetime
 
-from flask_security.core import RoleMixin, Security, UserMixin
-from flask_security.datastore import SQLAlchemyUserDatastore
+from flask_security.core import RoleMixin, UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
-from thirdplace.core import app
-
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 
 roles_users = db.Table(
@@ -78,7 +75,7 @@ class Post(db.Model):
 
     def __init__(self, topic, post, poster):
         super().__init__()
-        now = datetime.datetime.now(datetime.timezone.utc)
+        now = datetime.datetime.now(datetime.UTC)
         self.topic = topic
         self.post = post
         self.poster = poster
@@ -88,10 +85,6 @@ class Post(db.Model):
     @classmethod
     def query_for_topic(cls, topic_id: int):
         return cls.query.options(db.joinedload(cls.poster)).filter_by(topic_id=topic_id).all()
-
-
-user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-security = Security(app, user_datastore)
 
 
 class Topic(db.Model):
