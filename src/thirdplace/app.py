@@ -21,4 +21,5 @@ def create_app() -> Flask:
     app.config.from_envvar("THIRDPLACE_SETTINGS", silent=False)
     app.register_blueprint(forum.forum)
     models.db.init_app(app)
+    models.security.init_app(app, models.user_datastore)
     return app

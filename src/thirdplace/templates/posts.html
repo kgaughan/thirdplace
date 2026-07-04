@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block breadcrumbs %}
-<a href="{{ url_for('show_forums') }}">Forums</a> &raquo;
-<a href="{{ url_for('show_topics', forum_id=topic.forum.forum_id) }}">{{ topic.forum.forum }}</a> &raquo;
+<a href="{{ url_for('forum.show_forums') }}">Forums</a> &raquo;
+<a href="{{ url_for('forum.show_topics', forum_id=topic.forum.forum_id) }}">{{ topic.forum.forum }}</a> &raquo;
 {{ topic.topic }}
 {% endblock %}
 {% block body %}
@@ -10,7 +10,7 @@
 	<div class="t3p-post t3p-{{ loop.cycle('odd', 'even') }}">
 		<div class="t3p-post-header">
 			<div><img src="{{ post.poster.email|gravatar }}" width="64" height="64"></div>
-			<strong><a href="{{ url_for('show_user', user_id=post.poster.id) }}">{{ post.poster.name }}</a></strong><br>
+			<strong><a href="{{ url_for('forum.show_user', user_id=post.poster.id) }}">{{ post.poster.name }}</a></strong><br>
 			on <a href="#p{{ post.post_id }}">{{ post.posted }}</a>
 			{% if post.posted != post.modified %}
 				<br>Modified on {{ post.modified }}

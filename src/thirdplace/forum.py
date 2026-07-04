@@ -28,7 +28,7 @@ def show_forums():
         forum = models.Forum(form.forum.data)
         models.db.session.add(forum)
         models.db.session.commit()
-        return redirect(url_for("show_topics", forum_id=forum.forum_id))
+        return redirect(url_for("forum.show_topics", forum_id=forum.forum_id))
 
     return render_template("forums.html", forums=models.Forum.query_all(), form=form)
 
@@ -50,7 +50,7 @@ def show_topics(forum_id: int):
         models.db.session.add(topic)
         models.db.session.commit()
 
-        return redirect(url_for("show_posts", forum_id=forum_id, topic_id=topic.topic_id))
+        return redirect(url_for("forum.show_posts", forum_id=forum_id, topic_id=topic.topic_id))
 
     return render_template(
         "topics.html",
@@ -78,7 +78,7 @@ def show_posts(forum_id: int, topic_id: int):
         models.db.session.add(topic)
         models.db.session.commit()
 
-        return redirect(url_for("show_posts", forum_id=forum_id, topic_id=topic_id) + f"#p{post.post_id}")
+        return redirect(url_for("forum.show_posts", forum_id=forum_id, topic_id=topic_id) + f"#p{post.post_id}")
 
     return render_template(
         "posts.html",

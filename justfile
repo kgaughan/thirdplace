@@ -1,5 +1,3 @@
-app := "thirdplace.app:app"
-
 [private]
 default:
 	@just --list
@@ -13,9 +11,13 @@ devel:
 tidy:
 	@uv run --frozen ruff check --fix
 
+# initialise the database, &c.
+init:
+	@uv run thirdplace-tool initdb
+
 # run dev server
 dev-server:
-	@uv run --frozen flask --app {{app}} --debug run
+	@uv run thirdplace-tool run
 
 # clean up any caches or temporary files and directories
 clean:

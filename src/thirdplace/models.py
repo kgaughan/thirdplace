@@ -1,6 +1,7 @@
 import datetime
 
-from flask_security.core import RoleMixin, UserMixin
+from flask_security.core import RoleMixin, Security, UserMixin
+from flask_security.datastore import SQLAlchemyUserDatastore
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
@@ -44,6 +45,10 @@ class User(db.Model, UserMixin):
         secondary=roles_users,
         backref=db.backref("users", lazy="dynamic"),
     )
+
+
+user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+security = Security()
 
 
 class Post(db.Model):
