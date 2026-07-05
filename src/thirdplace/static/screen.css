@@ -119,10 +119,10 @@ ol.pagination li {
 #t3p-entries:first-child {
 	border-top: 1px solid #AAD;
 }
-#t3p-entries:nth-child(odd) {
+.t3p-post:nth-child(odd) {
 	background: #DDF;
 }
-#t3p-entries:nth-child(even) {
+.t3p-post:nth-child(even) {
 	background: white;
 }
 .t3p-post {

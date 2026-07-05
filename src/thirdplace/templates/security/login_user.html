@@ -2,12 +2,12 @@
 {% block breadcrumbs %}
 <a href="{{ url_for('forum.show_forums') }}">Forums</a>
 {% endblock %}
-{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% from "security/_macros.html" import render_form_errors, render_field_with_errors, render_field_errors, render_field %}
 
 {% block body %}
 {% include "security/_messages.html" %}
 <h1>Login</h1>
-<form action="{{ url_for_security('login') }}{{ prop_next() }}" method="post" id="t3p-form" name="login_user_form">
+<form action="{{ url_for_security('login') }}" method="post" id="t3p-form" name="login_user_form">
   {{ login_user_form.hidden_tag() }}
   {{ render_form_errors(login_user_form) }}
   {{ render_field_with_errors(login_user_form.email) }}
