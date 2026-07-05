@@ -1,6 +1,14 @@
+from flask_security import RegisterFormV2
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField
 from wtforms.validators import DataRequired, length
+
+
+class RegisterUser(RegisterFormV2):
+    name = StringField(
+        "Name",
+        validators=[DataRequired(), length(max=64)],
+    )
 
 
 class CreateForum(FlaskForm):

@@ -5,6 +5,8 @@ from flask_security.datastore import SQLAlchemyUserDatastore
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
+from . import forms
+
 db = SQLAlchemy()
 
 
@@ -48,7 +50,9 @@ class User(db.Model, UserMixin):
 
 
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-security = Security()
+security = Security(
+    register_form=forms.RegisterUser,
+)
 
 
 class Post(db.Model):

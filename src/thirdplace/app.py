@@ -6,8 +6,9 @@ from . import forum, models
 
 _app = None
 
+
 def __getattr__(name):
-    global _app
+    global _app  # noqa: PLW0603
     if name == "app":
         if _app is None:
             _app = create_app()

@@ -1,0 +1,19 @@
+{% set title = title|default("Confirm Sign Out") %}
+{% extends "layout.html" %}
+{% block breadcrumbs %}
+<a href="{{ url_for('forum.show_forums') }}">Forums</a>
+{% endblock %}
+{% from "security/_macros.html" import render_field, render_form_errors %}
+
+{% block body %}
+  {% include "security/_messages.html" %}
+  <h1>Confirm Sign Out</h1>
+  <form action="{{ url_for_security('logout') }}" method="post" id="t3p-form" name="logout_form">
+    {{ logout_form.hidden_tag() }}
+    {{ render_form_errors(logout_form) }}
+    {{ render_field(logout_form.refresh_token) }}
+    {{ render_field(logout_form.csrf_token) }}
+    {{ render_field(logout_form.submit) }}
+  </form>
+  {% include "security/_menu.html" %}
+{% endblock %}

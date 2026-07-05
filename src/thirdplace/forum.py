@@ -18,6 +18,7 @@ forum.add_app_template_filter(bbcode.render_html, "bbcode")
 forum.add_app_template_filter(gravatar.gravatar, "gravatar")
 forum.add_app_template_global(current_user, "current_user")
 
+
 @forum.route("/", methods=["GET", "POST"])
 def show_forums():
     if request.method == "POST" and not current_user.is_authenticated:
@@ -58,6 +59,7 @@ def show_topics(forum_id: int):
         topics=models.Topic.query_for_forum(forum_id),
         form=form,
     )
+
 
 @forum.route("/<int:forum_id>/<int:topic_id>/", methods=["GET", "POST"])
 def show_posts(forum_id: int, topic_id: int):

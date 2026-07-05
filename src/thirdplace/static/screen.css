@@ -115,17 +115,21 @@ ol.pagination li {
 	padding: 0 0.5ex;
 }
 */
-.t3p-odd, .t3p-even {
+
+#t3p-entries:first-child {
+	border-top: 1px solid #AAD;
+}
+#t3p-entries:nth-child(odd) {
+	background: #DDF;
+}
+#t3p-entries:nth-child(even) {
+	background: white;
+}
+.t3p-post {
 	margin: 0;
 	padding: 0.5ex;
 	overflow: hidden;
 	border-bottom: 1px solid #AAD;
-}
-.t3p-odd {
-	background: #DDF;
-}
-.t3p-even {
-	background: white;
 }
 .t3p-post-header {
 	font-size: 80%;

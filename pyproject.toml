@@ -31,7 +31,7 @@ dependencies = [
   "bbcode>=1.1.0,<2",
   "click>=8.1.7,<9",
   "Flask>=3.0.3,<4",
-  "Flask-Security-Too>=5.3.3,<6",
+  "Flask-Security-Too[common,fsqla]>=5.3.3,<6",
   "Flask-SQLAlchemy>=3.1.1,<4",
   "Flask-WTF>=1.2.1,<2",
   "pytz",
