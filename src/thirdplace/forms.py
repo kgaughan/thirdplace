@@ -23,9 +23,14 @@ class CreateTopic(FlaskForm):
         "Topic title",
         validators=[DataRequired(), length(max=128)],
     )
-
-    post = TextAreaField("")
+    post = TextAreaField(
+        "Body",
+        description="Supports BBCode",
+    )
 
 
 class Post(FlaskForm):
-    post = TextAreaField("Respond")
+    post = TextAreaField(
+        label="Respond",
+        description="Supports BBCode",
+    )

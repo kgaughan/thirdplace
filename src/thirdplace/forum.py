@@ -4,6 +4,7 @@ import bbcode
 from flask import (
     Blueprint,
     abort,
+    current_app,
     redirect,
     render_template,
     request,
@@ -22,7 +23,7 @@ forum.add_app_template_global(current_user, "current_user")
 @forum.route("/", methods=["GET", "POST"])
 def show_forums():
     if request.method == "POST" and not current_user.is_authenticated:
-        return app.login_manager.unauthorized()
+        return current_app.login_manager.unauthorized()
 
     form = forms.CreateForum()
     if form.validate_on_submit():
@@ -37,7 +38,7 @@ def show_forums():
 @forum.route("/<int:forum_id>/", methods=["GET", "POST"])
 def show_topics(forum_id: int):
     if request.method == "POST" and not current_user.is_authenticated:
-        return app.login_manager.unauthorized()
+        return current_app.login_manager.unauthorized()
 
     form = forms.CreateTopic()
     if form.validate_on_submit():
@@ -64,7 +65,7 @@ def show_topics(forum_id: int):
 @forum.route("/<int:forum_id>/<int:topic_id>/", methods=["GET", "POST"])
 def show_posts(forum_id: int, topic_id: int):
     if request.method == "POST" and not current_user.is_authenticated:
-        return app.login_manager.unauthorized()
+        return current_app.login_manager.unauthorized()
 
     topic = models.Topic.query.get(topic_id)
     if forum_id != topic.forum.forum_id:
