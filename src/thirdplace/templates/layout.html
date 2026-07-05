@@ -6,6 +6,17 @@
 		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic&subset=latin,latin-ext">
 		<link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='screen.css') }}">
 		<link rel="stylesheet" type="text/css" media="print" href="{{ url_for('static', filename='print.css') }}">
+		<script src="{{ url_for('static', filename='dayjs.min.js') }}" type="text/javascript" defer></script>
+		<script type="text/javascript">
+		// Humanise any timestamps
+		window.addEventListener("DOMContentLoaded", () => {
+			document.querySelectorAll("time").forEach((elem, _) => {
+				if (elem.dateTime != "") {
+					elem.innerText = dayjs(elem.dateTime).fromNow();
+				}
+			});
+		});
+		</script>
 	</head>
 	<body>
 
